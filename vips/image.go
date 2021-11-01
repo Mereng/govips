@@ -815,6 +815,15 @@ func (r *ImageRef) Maplut(lut *ImageRef) error {
 	return nil
 }
 
+func (r *ImageRef) Affine(a, b, c, d float64, interpolator Interpolate) error {
+	out, err := vipsAffine(r.image, a, b, c, d, interpolator)
+	if err != nil {
+		return err
+	}
+	r.setImage(out)
+	return nil
+}
+
 // ExtractBand extracts one or more bands out of the image (replacing the associated ImageRef)
 func (r *ImageRef) ExtractBand(band int, num int) error {
 	out, err := vipsExtractBand(r.image, band, num)
